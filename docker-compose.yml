@@ -1,0 +1,30 @@
+version: '3.7'
+services: 
+### ELASTICSEARCH ####################################### 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.1
+    restart: always
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms500m -Xmx500m
+    ports:
+      - 9200:9200
+    volumes:
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+    container_name: limevolts_elastic
+
+### KIBANA ################################################
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.11.1
+    restart: always
+    environment:
+      - SERVER_NAME=localhost
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - xpack.security.enabled=false
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601
+    container_name: limevolts_kibana
