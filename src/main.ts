@@ -8,7 +8,7 @@ async function bootstrap() {
     app.connectMicroservice({
       transport: Transport.MQTT,
       options: {
-        url: 'mqtt://192.168.50.238:1884',
+        url: 'mqtt://192.168.50.238:1883',
         username: 'limevolts',
         password: 'lv123',
         clientId: '',
